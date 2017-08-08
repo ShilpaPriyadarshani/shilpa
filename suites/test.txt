@@ -1,0 +1,19 @@
+*** Settings ***
+Library                SSHLibrary
+Suite Setup            Open Connection And Log In
+Suite Teardown         Close All Connections
+
+*** Keywords ***
+Open Connection And Log In
+    Open Connection    ${HOST}
+    Login    ${USER}    ${PASSWORD}
+    Write    xlogin -y
+    Read Until    Password:
+    Write    qnapsupport
+
+*** Test Cases ***
+Check disk Utility
+    Write    disk status
+    ${output}=    Read    delay=3s
+    Log To Console  ${output}
+    Should Contain   ${output}    ID

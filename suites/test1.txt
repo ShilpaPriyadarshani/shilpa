@@ -1,0 +1,47 @@
+*** Settings ***
+Library                SSHLibrary
+Library                String
+Suite Setup            Open Connection And Log In
+Suite Teardown         Close All Connections
+
+*** Variables ***
+#variables
+${HOST}    192.168.102.100
+${USER}    admin
+${PASSWORD}    nasadmin
+
+*** Keywords ***
+Open Connection And Log In
+    Open Connection    ${HOST}
+    Login    ${USER}    ${PASSWORD}
+    Write    xlogin -y
+    Read Until    Password:
+    Write    qnapsupport
+
+*** Test Cases ***
+Check n lun creations
+    Write    pool create stripe pool_infi h.7
+    ${output}=    Read    delay=5s
+    Write    pool status
+    ${output}=    Read    delay=5s
+    Log To Console  ${output}
+    Should Contain   ${output}    pool_infi
+
+*** Test Cases ***
+For-Loop-In-Range
+    :FOR    ${i}    IN RANGE    99999
+    \    Log To Console  ${i}
+    \    Write    lun create lun${i} pool_infi 1g
+    \    ${output}=    Read    delay=15s
+    \    Log To Console  ${output}
+    \    Should Contain   ${output}    lun${i}
+#    \    Exit For Loop If Not   liun${i}
+
+*** Test Cases ***
+For-Loop-In-Range
+    :FOR    ${i}    IN RANGE    99999
+    \    Log To Console  ${i}
+    \    Write    lun delete lun${i}
+    \    ${output}=    Read    delay=15s
+    \    Log To Console  ${output}
+#    \    Should Not Contain   ${output}    lun${i}
