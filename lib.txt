@@ -1,0 +1,11 @@
+*** Settings ***
+Library                SSHLibrary
+Library                Mylibrary.py
+Library                String
+
+
+*** Test Cases ***
+Checkng library call 
+    ${output}=    join two strings    hello    shilpa
+    Log To Console  ${output}
+    Should be equal   ${output}    hello shilpa
