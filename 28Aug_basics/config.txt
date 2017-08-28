@@ -1,0 +1,26 @@
+*** Variables ***
+#PLEASE ENTER POOL RELATED CONFIGURATION DETAILS
+${pool_name}    pool_key
+${pool_type}    stripe
+${pool size}    10g
+${pool_property}
+${req_disk}    1
+${disks}    h.4 h.6
+
+#PLEASE ENTER LUN RELATED CONFIGURATION DETAILS
+${lun_name}    lun_key
+${lun_size}    10g
+${lun_encryption_value}    
+${lun_property}    dedup
+${lun_property_value}    sha256
+${lun_password}    nonenone
+${lun_password_saver}    on
+
+#PLEASE ENTER SHARE RELATED CONFIGURATION DETAILS
+${share_name}    share_key
+${share_size}    10g
+${share_encryption_value}    
+${share_property}    dedup
+${share_property_value}    sha256
+${share_password}    nonenone
+${share_password_saver}    on

@@ -1,0 +1,44 @@
+*** Settings ***
+Library                SSHLibrary
+Library                String
+Library                OperatingSystem
+Resource               create_delete_lib.robot
+Resource               config.txt
+Suite Setup            Open Connection And Log In
+Suite Teardown         Close All Connections
+
+*** Variables ***
+#variables
+${HOST}    192.168.102.100
+${USER}    admin
+${PASSWORD}    nasadmin
+
+*** Test Cases ***
+Open Connection And Log In
+    Open Connection And Log In
+
+Check disk Utility
+    ${value}=    Check disk Utility
+    Log To Console  ${value}
+
+create a pool
+    ${value}=    create pool
+    #${rc}=    Should Contain    ${value}    ${pool_name}
+    Should Contain    ${value}    ${pool_name}
+    #Log To Console    ${rc}
+    #Run keyword if '${rc}' == 'None'    Log To Console    pool is created
+
+create a lun
+    ${value}=    create lun
+    #${rc}=    Should Contain    ${value}    ${lun_name}
+    Should Contain    ${value}    ${lun_name}
+    #Log To Console    ${rc}
+    #Run keyword if '${rc}' == 'None'    Log To Console   lun is created
+
+lun Deletion
+    ${value}=    lun Deletion 
+    Should Not Contain    ${value}    ${lun_name}
+
+pool Deletion
+    ${value}=    pool Deletion 
+    Should Not Contain    ${value}    ${pool_name}
